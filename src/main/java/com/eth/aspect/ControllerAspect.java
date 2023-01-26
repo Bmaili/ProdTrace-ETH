@@ -11,7 +11,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * 控制层切面，负责日志处理
  */
 @Aspect
@@ -20,8 +19,7 @@ import org.springframework.stereotype.Component;
 public class ControllerAspect {
 
     @Pointcut("execution(public * com.eth.controller.*.*(..))")
-    public void controller() {
-    }
+    public void controller() {}
 
     @Before("controller()")
     public void before(JoinPoint joinPoint) {

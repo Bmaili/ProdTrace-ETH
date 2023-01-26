@@ -11,7 +11,6 @@ import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * Service层切面，日志处理，异常捕获，事务回滚
  */
 @Aspect
@@ -20,10 +19,7 @@ import org.springframework.stereotype.Component;
 public class ServiceAspect {
 
     @Pointcut("execution(public * com.eth.service.*.*(..))")
-    public void service() {
-
-    }
-
+    public void service() {}
 
     @Before("service()")
     public void before(JoinPoint joinPoint) {
