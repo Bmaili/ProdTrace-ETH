@@ -1,16 +1,19 @@
 package com.eth.service.impl;
 
+import com.eth.bo.OperatorBO;
 import com.eth.entity.LoginUser;
-import com.eth.enums.ResultEnum;
+import com.eth.entity.Operator;
 import com.eth.form.LoginForm;
 import com.eth.mapper.LoginMapper;
+import com.eth.mapper.OperatorMapper;
 import com.eth.security.JwtUser;
 import com.eth.security.JwtUserDetailServiceImpl;
 import com.eth.service.LoginService;
 import com.eth.utils.JwtUtils;
 import com.eth.utils.RedisCache;
+import com.eth.vo.OperatorInfoVO;
 import com.eth.vo.ResponseResult;
-import io.netty.util.internal.StringUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,17 +22,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginServiceImpl implements LoginService {
     @Autowired
     LoginMapper loginMapper;
+
+    @Autowired
+    OperatorMapper operatorMapper;
 
     @Autowired
     private RedisCache redisCache;
@@ -46,16 +49,22 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult login(LoginForm loginForm) {
 
+        // 验证码检查
+        String verifyKey = "captchaImage:" + loginForm.getUuid();
+        String captcha = redisCache.getCacheObject(verifyKey);
+        redisCache.deleteObject(verifyKey);
+        if (captcha == null || (!captcha.equals(loginForm.getCode()))) {
+            return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "验证码错误！");
+        }
+
         // 通过电子用户名登陆用户
         LoginUser user = loginMapper.getLoginUser(loginForm.getUsername());
         if (user == null) {
-            // return ResultVOUtil.error(ResultEnum.USER_NOT_EXIST);
             return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "登陆失败,未注册用户！");
         }
 
         JwtUser userDetails = (JwtUser) jwtUserDetailService.loadUserByUsername(loginForm.getUsername());
         if (!new BCryptPasswordEncoder().matches(loginForm.getPassword(), userDetails.getPassword())) {
-            // return ResultVOUtil.error(ResultEnum.PASSWORD_ERROR);
             return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "登陆失败,密码错误！");
         }
 
@@ -68,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
         String userId = user.getUsername().toString();
         String jwt = JwtUtils.createJWT(userId);
         HashMap<String, String> map = new HashMap<>();
-        map.put("token", jwt);
+        map.put("Authorization", jwt);
 
         // 将token设置到redis，将user设置为redis的值，注意把密码改掉以防泄露
         // user.setToken(jwt);
@@ -77,6 +86,15 @@ public class LoginServiceImpl implements LoginService {
         redisCache.setCacheObject("login:" + userId, userDetails);
 
         return new ResponseResult(HttpStatus.OK.value(), "登陆成功", map);
+    }
+
+    @Override
+    public ResponseResult getUserInfo() {
+        String userId = (String) httpServletRequest.getAttribute("userId");
+        Operator operator = operatorMapper.selectById(userId);
+        OperatorInfoVO operatorInfoVO = new OperatorInfoVO();
+        BeanUtils.copyProperties(operator, operatorInfoVO);
+        return new ResponseResult(HttpStatus.OK.value(), operatorInfoVO);
     }
 
 

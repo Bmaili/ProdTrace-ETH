@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.mapper.DeptMapper">
+
+    <resultMap type="com.eth.entity.Dept" id="DeptResult">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="role" column="role"/>
+        <result property="shortName" column="short_name"/>
+        <result property="address" column="address"/>
+        <result property="linkman" column="linkman"/>
+        <result property="linkphone" column="linkphone"/>
+        <result property="license" column="license"/>
+        <result property="notes" column="notes"/>
+        <result property="picture" column="picture"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectDept">
+        select dept_id,
+               dept_name,
+               short_name,
+               address,
+               `role`,
+               linkman,
+               linkphone,
+               license,
+               notes,
+               picture,
+               create_time
+        from dept_info
+    </sql>
+
+    <select id="selectById" parameterType="String" resultMap="DeptResult">
+        <include refid="selectDept"/>
+        where dept_id = #{deptId}
+    </select>
+
+    <select id="selectDeptList" parameterType="com.eth.form.DeptListForm" resultMap="DeptResult">
+        <include refid="selectDept"/>
+        where
+        `role` != '0'
+        <if test='deptId != null and deptId != ""'>and dept_id = #{deptId}</if>
+        <if test='deptName != null and deptName != ""'>and dept_name like concat('%', #{deptName},'%')
+        </if>
+        <if test='role != null and role != "" '>and `role` = #{role}</if>
+        <if test='shortName != null and shortName != "" '>and short_name like concat('%', #{shortName}, '%')</if>
+        <if test='address != null and address != "" '>and address like concat('%', #{address}, '%')</if>
+        <if test='linkman != null and linkman != "" '>and linkman like concat('%', #{linkman}, '%')</if>
+        <if test='linkphone != null and linkphone != "" '>and linkphone like concat('%', #{linkphone}, '%')</if>
+        <if test='license != null and license != "" '>and address like concat('%', #{license}, '%')</if>
+        <if test='beginTime != null and beginTime != ""'><!-- 开始时间检索 -->
+            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test='endTime != null and endTime != ""'><!-- 结束时间检索 -->
+            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    </select>
+
+
+</mapper>

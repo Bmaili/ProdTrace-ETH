@@ -22,6 +22,7 @@ public class OperatorListVO {
     private Date createTime;
 
     private String phone;
+    private String email;
 
     private String sex;//(0女,1男）
 

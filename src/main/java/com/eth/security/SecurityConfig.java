@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 //对于登陆接口允许匿名访问
-                .antMatchers("/login", "/getLoginCode").anonymous()
+                .antMatchers("/login", "/captchaImage").anonymous()
                 // 接口文档开放
                 .antMatchers("/v2/api-docs", "/api-docs", "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
                 //暂时开放监控页，实际上线需要关闭

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.mapper.OperatorMapper">
+
+    <resultMap type="com.eth.entity.Operator" id="OperatorResult">
+        <id property="operatorId" column="operator_id"/>
+        <result property="operatorName" column="operator_name"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="chineseId" column="chinese_id"/>
+        <result property="role" column="role"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="avatar" column="avatar"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="String" resultMap="OperatorResult">
+        select o.operator_id,
+               o.operator_name,
+               o.dept_id,
+               o.chinese_id,
+               o.`role`,
+               o.sex,
+               o.phone,
+               o.avatar,
+               o.status,
+               o.email,
+               o.create_time,
+               d.dept_name
+        from operator_info as o,dept_info as d where o.dept_id=d.dept_id
+        and o.operator_id = #{operatorId}
+    </select>
+
+    <select id="selectOperatorList" parameterType="com.eth.form.OperatorListForm" resultMap="OperatorResult">
+        select o.operator_id,
+        o.operator_name,
+        o.dept_id,
+        o.chinese_id,
+        o.`role`,
+        o.sex,
+        o.phone,
+        o.avatar,
+        o.status,
+        o.email,
+        o.create_time,
+        d.dept_name
+        from operator_info as o,dept_info as d where o.dept_id=d.dept_id
+        and
+        o.`role` != '0'
+        <if test='operatorId != null and operatorId != ""'>and o.operator_id = #{operatorId}</if>
+        <if test='operatorName != null and operatorName != ""'>and o.operator_name like concat('%', #{operatorName},'%')
+        </if>
+        <if test='deptId != null and deptId !="" '>and o.dept_id = #{deptId}</if>
+        <if test='chineseId != null and chineseId != "" '>and o.chinese_id = #{chineseId}</if>
+        <if test='role != null and role != "" '>and o.`role` = #{role}</if>
+        <if test='phone != null and phone != "" '>and o.phone like concat('%', #{phone}, '%')</if>
+        <if test='sex != null and sex != "" '>and o.o.sex = #{sex}</if>
+        <if test='status != null and status != "" '>and o.`status` = #{status}</if>
+        <if test='beginTime != null and beginTime != ""'><!-- 开始时间检索 -->
+            AND date_format(o.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test='endTime != null and endTime != ""'><!-- 结束时间检索 -->
+            AND date_format(o.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    </select>
+    
+    <delete id="delbyId" parameterType="String">
+
+    </delete>
+
+
+</mapper>

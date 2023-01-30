@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.mapper.ProdMapper">
+
+    <resultMap type="com.eth.entity.Product" id="ProdResult">
+        <id property="prodId" column="prod_id"/>
+        <result property="prodName" column="prod_name"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="unit" column="unit"/>
+        <result property="category" column="category"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="selectProdList" parameterType="com.eth.form.ProdListForm" resultMap="ProdResult">
+        select p.prod_id,
+        p.prod_name,
+        p.dept_id,
+        p.unit,
+        p.category,
+        p.status,
+        d.dept_name
+        from prod_info as p,dept_info as d where p.dept_id=d.dept_id
+        <if test='prodId != null and prodId != ""'>and p.prod_id = #{prodId}</if>
+        <if test='prodName != null and prodName != ""'>and p.prod_name like concat('%', #{prodName},'%')
+        </if>
+        <if test='deptId != null and deptId !="" '>and p.dept_id = #{deptId}</if>
+        <if test='unit != null and unit != "" '>and p.unit = #{unit}</if>
+        <if test='category != null and category != "" '>and p.category = #{category}</if>
+        <if test='status != null and status != "" '>and p.`status` = #{status}</if>
+        <if test='beginTime != null and beginTime != ""'><!-- 开始时间检索 -->
+            AND date_format(p.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test='endTime != null and endTime != ""'><!-- 结束时间检索 -->
+            AND date_format(p.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    </select>
+
+
+</mapper>

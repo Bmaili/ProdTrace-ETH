@@ -7,6 +7,7 @@ import com.eth.vo.ResponseResult;
 public interface LoginService {
 
     ResponseResult login(LoginForm user);
+    ResponseResult getUserInfo();
 
     // ResponseResult logout();
     //

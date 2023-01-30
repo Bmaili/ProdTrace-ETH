@@ -38,6 +38,20 @@
             <version>1.2.47</version>
         </dependency>
 
+        <!-- 验证码 -->
+        <dependency>
+            <groupId>pro.fessional</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+
+        <!-- pagehelper 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.6</version>
+        </dependency>
+
         <!--springsecurity-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

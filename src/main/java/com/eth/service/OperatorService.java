@@ -1,8 +1,13 @@
 package com.eth.service;
 
+import com.eth.entity.Operator;
 import com.eth.form.OperatorListForm;
-import com.eth.vo.ResponseResult;
+import com.eth.vo.OperatorInfoVO;
+
+import java.util.List;
 
 public interface OperatorService  {
-    ResponseResult getOperatorList(OperatorListForm form  );
+    List<Operator> selectOperatorList(OperatorListForm form);
+
+    OperatorInfoVO getOperatorById(String id);
 }

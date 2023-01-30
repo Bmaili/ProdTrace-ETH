@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-// @RequestMapping("/user")
 @Api(tags = "用户登陆登出注销接口")
 public class LoginController {
 
@@ -20,6 +19,12 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseResult userLogin(@RequestBody LoginForm user) {
         return loginService.login(user);
+    }
+
+    @ApiOperation("获取用户详细信息")
+    @GetMapping("/getInfo")
+    public ResponseResult getUserInfo() {
+        return loginService.getUserInfo();
     }
 
     // @ApiOperation("用户登出")

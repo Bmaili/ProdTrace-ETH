@@ -18,4 +18,8 @@ public class LoginForm {
     @ApiModelProperty("登录验证码")
     @NotNull("验证码不能为空")
     private String code;
+
+    @ApiModelProperty("UUID")
+    @NotNull("UUID不能为空")
+    private String uuid;
 }

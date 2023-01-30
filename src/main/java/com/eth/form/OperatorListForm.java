@@ -5,10 +5,40 @@ import lombok.Data;
 
 @Data
 public class OperatorListForm {
-    @ApiModelProperty("起始行数的文章Id，意味着请求从它开始的10条记录（非必要参数）")
-    private Long startId = 0L;
+    @ApiModelProperty("页码")
+    private Integer pageNum = 1;
 
-    @ApiModelProperty("文章分类Id，（非必要参数）")
-    private Long typeId = 0L;
+    @ApiModelProperty("每页数量")
+    private Integer pageSize = 10;
+
+    @ApiModelProperty("操作员姓名")
+    private String operatorName;
+
+    @ApiModelProperty("操作员电话")
+    private String phone;
+
+    @ApiModelProperty("操作员账号状态")
+    private String status;
+
+    @ApiModelProperty("所属企业ID")
+    private String deptId;
+
+    @ApiModelProperty("开始时间")
+    private String beginTime;
+
+    @ApiModelProperty("结束时间")
+    private String endTime;
+
+    @ApiModelProperty("操作员性别")
+    private String sex;
+
+    @ApiModelProperty("角色")
+    private String role;
+
+    @ApiModelProperty("身份证号")
+    private String chineseId;
+
+    @ApiModelProperty("操作员账号ID")
+    private String operatorId;
 }
 
