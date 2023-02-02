@@ -1,15 +1,14 @@
 package com.eth.mapper;
 
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.eth.entity.LoginUser;
+import com.eth.pojo.LoginUserPo;
 import org.apache.ibatis.annotations.*;
 
 
 @Mapper
 public interface LoginMapper {
     @Select("select * from login where operator_id=#{username}")
-    LoginUser getLoginUser(String username);
+    LoginUserPo getLoginUser(String username);
 
     @Insert("insert into login (operator_id,  password)values (#{operatorId}, #{password})")
     int addLoginUser( String operatorId, String password);

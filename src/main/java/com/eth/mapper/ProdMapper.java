@@ -1,8 +1,6 @@
 package com.eth.mapper;
 
-import com.eth.entity.Dept;
-import com.eth.entity.Product;
-import com.eth.form.DeptListForm;
+import com.eth.pojo.ProductPo;
 import com.eth.form.ProdListForm;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +9,11 @@ import java.util.List;
 @Mapper
 public interface ProdMapper {
 
-    List<Product> selectProdList(ProdListForm form);
+    List<ProductPo> selectProdList(ProdListForm form);
+
+    ProductPo selectById(String productId);
+
+    void updateById(ProductPo product);
+
+    void insertProduct(ProductPo product);
 }

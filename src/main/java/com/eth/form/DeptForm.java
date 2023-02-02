@@ -1,18 +1,16 @@
 package com.eth.form;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class DeptListForm {
-    @ApiModelProperty("页码")
-    private Integer pageNum = 1;
-
-    @ApiModelProperty("每页数量")
-    private Integer pageSize = 10;
-
+public class DeptForm {
     @ApiModelProperty("企业ID")
     private String deptId;
 
@@ -42,10 +40,4 @@ public class DeptListForm {
 
     @ApiModelProperty("资料图片url列表")
     private String picture;
-
-    @ApiModelProperty("开始时间")
-    private String beginTime;
-
-    @ApiModelProperty("结束时间")
-    private String endTime;
 }

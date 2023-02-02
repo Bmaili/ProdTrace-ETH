@@ -1,4 +1,4 @@
-package com.eth.entity;
+package com.eth.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Dept {
+public class DeptPo {
     private String deptId;// 企业ID
 
     private String deptName;// 操作员姓名

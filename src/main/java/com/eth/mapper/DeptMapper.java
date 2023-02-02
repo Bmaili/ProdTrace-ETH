@@ -1,6 +1,6 @@
 package com.eth.mapper;
 
-import com.eth.entity.Dept;
+import com.eth.pojo.DeptPo;
 import com.eth.form.DeptListForm;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,7 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface DeptMapper {
-    Dept selectById(String deptId);
+    DeptPo selectById(String deptId);
 
-    List<Dept> selectDeptList(DeptListForm form);
+    List<DeptPo> selectDeptList(DeptListForm form);
+
+    void delById(String deptId);
+
+    void updateById(DeptPo dept);
+
+    void insertDept(DeptPo dept);
 }

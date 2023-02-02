@@ -1,16 +1,17 @@
 package com.eth.controller;
 
-import com.eth.entity.Product;
+import com.eth.form.ProductForm;
+import com.eth.pojo.ProductPo;
 import com.eth.form.ProdListForm;
 import com.eth.service.ProdService;
+import com.eth.vo.ProductInfoVo;
+import com.eth.vo.ResponseResult;
 import com.eth.vo.TableDataInfo;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,7 +28,31 @@ public class ProdController {
     @GetMapping(name = "查询产品列表", value = "/list")
     public TableDataInfo prodList(@Valid ProdListForm form) {
         PageHelper.startPage(form.getPageNum(), form.getPageSize());
-        List<Product> prods = prodService.selectProdList(form);
+        List<ProductPo> prods = prodService.selectProdList(form);
         return new TableDataInfo(prods);
+    }
+    @ApiOperation("通过ID查询产品信息")
+    @GetMapping(name = "查询产品")
+    public ResponseResult getProduct(@Valid String productId) {
+        ProductInfoVo product = prodService.getProductById(productId);
+        return new ResponseResult(product);
+    }
+
+    @ApiOperation("更新产品")
+    @PutMapping(name = "更新产品")
+    public ResponseResult updateProduct(@RequestBody @Valid ProductForm form) {
+        return prodService.updateProduct(form);
+    }
+
+    @ApiOperation("增加产品")
+    @PostMapping(name = "增加产品")
+    public ResponseResult addProduct(@RequestBody @Valid ProductForm form) {
+        return prodService.insertProduct(form);
+    }
+
+    @ApiOperation("更新产品状态")
+    @PutMapping(name = "更新产品状态", value = "/changeStatus")
+    public ResponseResult changeProductStatus(@RequestBody @Valid ProductForm form) {
+        return prodService.updateProduct(form);
     }
 }

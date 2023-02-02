@@ -1,4 +1,4 @@
-package com.eth.entity;
+package com.eth.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @ToString
-public class LoginUser implements Serializable {
+public class LoginUserPo implements Serializable {
     private String username;
     private String password;
 }

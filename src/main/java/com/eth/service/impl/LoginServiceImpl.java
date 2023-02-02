@@ -1,8 +1,7 @@
 package com.eth.service.impl;
 
-import com.eth.bo.OperatorBO;
-import com.eth.entity.LoginUser;
-import com.eth.entity.Operator;
+import com.eth.pojo.LoginUserPo;
+import com.eth.pojo.OperatorPo;
 import com.eth.form.LoginForm;
 import com.eth.mapper.LoginMapper;
 import com.eth.mapper.OperatorMapper;
@@ -58,7 +57,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         // 通过电子用户名登陆用户
-        LoginUser user = loginMapper.getLoginUser(loginForm.getUsername());
+        LoginUserPo user = loginMapper.getLoginUser(loginForm.getUsername());
         if (user == null) {
             return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "登陆失败,未注册用户！");
         }
@@ -91,9 +90,9 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult getUserInfo() {
         String userId = (String) httpServletRequest.getAttribute("userId");
-        Operator operator = operatorMapper.selectById(userId);
+        OperatorPo operatorPo = operatorMapper.selectById(userId);
         OperatorInfoVO operatorInfoVO = new OperatorInfoVO();
-        BeanUtils.copyProperties(operator, operatorInfoVO);
+        BeanUtils.copyProperties(operatorPo, operatorInfoVO);
         return new ResponseResult(HttpStatus.OK.value(), operatorInfoVO);
     }
 

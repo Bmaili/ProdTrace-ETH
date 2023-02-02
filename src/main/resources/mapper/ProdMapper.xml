@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eth.mapper.ProdMapper">
 
-    <resultMap type="com.eth.entity.Product" id="ProdResult">
+    <resultMap type="com.eth.pojo.ProductPo" id="ProdResult">
         <id property="prodId" column="prod_id"/>
         <result property="prodName" column="prod_name"/>
         <result property="deptId" column="dept_id"/>
@@ -13,6 +13,7 @@
         <result property="category" column="category"/>
         <result property="status" column="status"/>
     </resultMap>
+
 
     <select id="selectProdList" parameterType="com.eth.form.ProdListForm" resultMap="ProdResult">
         select p.prod_id,
@@ -37,6 +38,48 @@
             AND date_format(p.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
         </if>
     </select>
-
+    <select id="selectById" resultType="com.eth.pojo.ProductPo">
+        select p.prod_id,
+               p.prod_name,
+               p.dept_id,
+               p.unit,
+               p.category,
+               p.status,
+               d.dept_name
+        from prod_info as p,
+             dept_info as d
+        where p.dept_id = d.dept_id
+          and p.prod_id = #{prodId}
+    </select>
+    <insert id="insertProduct" parameterType="com.eth.pojo.ProductPo">
+        insert into prod_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="prodId != null">prod_id,</if>
+            <if test="prodName != null">prod_name,</if>
+            <if test="deptId!= null">dept_id,</if>
+            <if test="unit != null">unit,</if>
+            <if test="status != null">`status`,</if>
+            <if test="category != null">category,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="prodId != null">#{prod_id},</if>
+            <if test="prodName != null">#{prod_name},</if>
+            <if test="deptId!= null">#{dept_id},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="status != null">#{status},</if>
+            <if test="category != null">#{category},</if>
+        </trim>
+    </insert>
+    <update id="updateById" parameterType="com.eth.pojo.ProductPo">
+        update prod_info
+        <set>
+            <if test='prodName != null and prodName != ""'>prod_name = #{prodName},</if>
+            <if test='deptId != null and deptId !="" '>dept_id = #{deptId},</if>
+            <if test='unit != null and unit != "" '>unit = #{unit},</if>
+            <if test='status != null and status != "" '>status = #{status},</if>
+            <if test='category != null and category != "" '>category = #{category},</if>
+        </set>
+    </update>
 
 </mapper>
