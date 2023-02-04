@@ -145,18 +145,18 @@ public class LoginServiceImpl implements LoginService {
     // }
 
 
-    // @Override
-    // public ResponseResult userLogout() {
-    //
-    //     // filter从redis里的token提取出用户id后，将其设置在"userId"里
-    //     String userId = (String) httpServletRequest.getAttribute("userId");
-    //
-    //     //删除redis中的值
-    //     if (redisCache.deleteObject("login:" + userId)) {
-    //         return new ResponseResult(HttpStatus.OK.value(), "登出成功", "OK");
-    //     }
-    //     return new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "登出失败！", "false");
-    // }
+    @Override
+    public ResponseResult logout() {
+
+        // filter从redis里的token提取出用户id后，将其设置在"userId"里
+        String userId = (String) httpServletRequest.getAttribute("userId");
+
+        //删除redis中的值
+        if (redisCache.deleteObject("login:" + userId)) {
+            return new ResponseResult(HttpStatus.OK.value(), "登出成功", "OK");
+        }
+        return new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "登出失败！", "false");
+    }
 
     // @Override
     // public ResponseResult getRegistCode(String email) {

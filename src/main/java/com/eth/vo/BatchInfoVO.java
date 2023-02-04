@@ -1,4 +1,4 @@
-package com.eth.pojo;
+package com.eth.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -12,26 +12,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DeptPo {
+public class BatchInfoVO {
+    private String batchId;
+
     private String deptId;
 
     private String deptName;
 
-    private String role;
+    private String prodId;
 
-    private String shortName;
+    private String prodName;
 
-    private String address;
+    private String headBlock;
 
-    private String linkman;
-
-    private String linkphone;
-
-    private String license;
-
-    private String notes;
-
-    private String picture;
+    private String status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;

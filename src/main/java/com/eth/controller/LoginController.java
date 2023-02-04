@@ -27,11 +27,11 @@ public class LoginController {
         return loginService.getUserInfo();
     }
 
-    // @ApiOperation("用户登出")
-    // @GetMapping("/logout")
-    // public ResponseResult userLogout() {
-    //     return loginService.userLogout();
-    // }
+    @ApiOperation("用户登出")
+    @PostMapping("/user/logout")
+    public ResponseResult userLogout() {
+        return loginService.logout();
+    }
     //
     // @ApiOperation("用户注册")
     // @PostMapping("/regist")

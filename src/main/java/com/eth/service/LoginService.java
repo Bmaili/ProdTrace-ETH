@@ -9,7 +9,7 @@ public interface LoginService {
     ResponseResult login(LoginForm user);
     ResponseResult getUserInfo();
 
-    // ResponseResult logout();
+    ResponseResult logout();
     //
     // ResponseResult regist(LoginForm user);
     //

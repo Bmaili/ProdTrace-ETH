@@ -89,11 +89,6 @@ public class AllTest {
         prods.forEach(System.out::println);
     }
 
-    @Test
-    public void test5(){
-        ResponseResult result = deptController.getListselect();
-        System.out.println(result);
-    }
 
     @Test
     public void test6(){

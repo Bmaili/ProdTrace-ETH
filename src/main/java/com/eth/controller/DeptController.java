@@ -47,9 +47,9 @@ public class DeptController {
     }
 
     @ApiOperation("查询企业选项列表")
-    @GetMapping(value = "/listselect")
-    public ResponseResult getListselect() {
-        List<DeptListItemVO> itemVOS = deptService.selectDeptList();
+    @GetMapping(value = "/options")
+    public ResponseResult getOptionsList(@Valid DeptForm form) {
+        List<DeptListItemVO> itemVOS = deptService.selectDeptOptionsList(form);
         return new ResponseResult(itemVOS);
     }
 

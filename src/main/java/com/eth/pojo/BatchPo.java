@@ -12,20 +12,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProductPo  {
-    private String prodId;// 产品编号
+public class BatchPo {
+    private String batchId;
 
-    private String prodName;// 产品全称
+    private String deptId;
 
-    private String deptId;//所属企业Id
+    private String deptName;
 
-    private String deptName;//所属企业全称
+    private String prodId;
 
-    private String unit;//计算单位
+    private String prodName;
 
-    private String status;//(0正常,1停用)
+    private String headBlock;
 
-    private String category;//类别
+    private String status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;

@@ -21,7 +21,6 @@ import org.springframework.util.StringUtils;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -87,8 +86,10 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public List<DeptListItemVO> selectDeptList() {
-        List<DeptPo> deptPos = deptMapper.selectDeptList(new DeptListForm());
+    public List<DeptListItemVO> selectDeptOptionsList(DeptForm form) {
+        DeptListForm listForm = new DeptListForm();
+        BeanUtils.copyProperties(form,listForm);
+        List<DeptPo> deptPos = deptMapper.selectDeptList(listForm);
         List<DeptListItemVO> voList = deptPos.stream().map(dept -> {
             DeptListItemVO itemVO = new DeptListItemVO();
             itemVO.setDictLabel(dept.getDeptName());

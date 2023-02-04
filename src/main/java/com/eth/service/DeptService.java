@@ -12,7 +12,7 @@ import java.util.List;
 public interface DeptService {
     List<DeptPo> selectDeptList(DeptListForm form);
 
-    List<DeptListItemVO>selectDeptList();
+    List<DeptListItemVO>selectDeptOptionsList(DeptForm form);
 
     DeptInfoVO getDeptById(String id);
 
