@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eth.pojo.BlockchainTransaction;
 import com.eth.pojo.DeptPo;
 import com.eth.service.FlowService;
-import com.eth.solidity.SimpleStorage;
+import com.eth.solidity.ProductFlowTrace;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +18,7 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tuples.generated.Tuple2;
 import org.web3j.tx.Contract;
 import org.web3j.utils.Convert;
 import springfox.documentation.spring.web.json.Json;
@@ -31,8 +32,8 @@ import java.util.List;
 public class EthTest {
     @Autowired
     private FlowService flowService;
-    @Autowired
-    private Web3j web3j;
+    // @Autowired
+    // private Web3j web3j;
 
     @Test
     public void test0() throws Exception {
@@ -58,19 +59,19 @@ public class EthTest {
 
         Web3j web3j = Web3j.build(new HttpService("http://127.0.0.1:7545"));
         // 填入刚才部署后打印出来的合约地址
-        String contractAddress = "0xd122C7D2642e0768C982652EaBbC819187ef0940";
+        String contractAddress = "0xf2C06639B8FA91837a2fb954119b43388E4376e5";
         // 获取第一个账户
         String minerBaseAccount = web3j.ethAccounts().send().getAccounts().get(0);
-        // System.out.println("minerBaseAccount:" + minerBaseAccount);
+        System.out.println("minerBaseAccount:" + minerBaseAccount);
         Credentials credentials = Credentials.create(minerBaseAccount);
         // 合约对象
         // SimpleStorage simpleStorage = new SimpleStorage(contractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_PRICE);
-        SimpleStorage simpleStorage = new SimpleStorage(contractAddress, web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(3000000));
-        TransactionReceipt send = simpleStorage.addTrace(str).send();
-        System.out.println(send);
-        List sayHello = simpleStorage.getTraceInfo().send();
-        // sayHello.forEach(System.out::println);
-        System.out.println(sayHello);
+        ProductFlowTrace simpleStorage = new ProductFlowTrace(contractAddress, web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(3000000));
+        TransactionReceipt send = simpleStorage.addTrace("2233",str).send();
+        // System.out.println(send);
+        List list = simpleStorage.getTraceInfo("2233").send();
+        System.out.println(list);
+
     }
 
     @Test

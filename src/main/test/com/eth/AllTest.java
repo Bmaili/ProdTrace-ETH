@@ -2,6 +2,7 @@ package com.eth;
 
 import com.eth.controller.DeptController;
 import com.eth.controller.OperatorController;
+import com.eth.form.flow.CreaterFlowForm;
 import com.eth.pojo.DeptPo;
 import com.eth.pojo.OperatorPo;
 import com.eth.pojo.ProductPo;
@@ -11,26 +12,34 @@ import com.eth.form.ProdListForm;
 import com.eth.mapper.DeptMapper;
 import com.eth.mapper.OperatorMapper;
 import com.eth.service.DeptService;
+import com.eth.service.FlowService;
 import com.eth.service.ProdService;
 import com.eth.utils.AliOss;
+import com.eth.utils.FileSHAUtils;
 import com.eth.vo.DeptInfoVO;
 import com.eth.vo.ResponseResult;
 import lombok.Data;
 import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootTest
 public class AllTest {
+    @Autowired
+    private FlowService flowService;
     @Autowired
     private OperatorMapper operatorMapper;
 
@@ -115,6 +124,43 @@ public class AllTest {
         ResponseResult result = operatorController.addOperator(form);
         System.out.println(result);
     }
+
+    @Test
+    public void test9() throws Exception {
+        File file = new File("D:\\Desktop\\若依前端结构.png");
+        InputStream stream = new FileInputStream(file);
+        // String md5Hex = DigestUtils.md5Hex(stream);
+        // System.out.println(md5Hex);
+        // MessageDigest md5 = MessageDigest.getInstance("SHA-256");
+        String hash = FileSHAUtils.getFileSHA256(file);
+        System.out.println(hash);
+    }
+
+    @Test
+    public void test10() throws Exception {
+         String str = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(str);
+        String df = sdf.format(new Date());
+        System.out.println(df);
+    }
+
+    @Test
+    public void test11() throws Exception {
+        CreaterFlowForm form = new CreaterFlowForm();
+        form.setDeptName("娃哈哈生产");
+        form.setNum("998");
+        form.setCategory("食品");
+        form.setProdId("998");
+        form.setPhone("187783443432");
+        form.setFileUrlList("http://skvkeevwev-sve.png,http://sdlvjleih-se21e4.jpg");
+        form.setQuality("180天");
+        form.setOrigin("广西桂林");
+        form.setOperatorName("周杰伦");
+        flowService.addCreaterFlow(form);
+    }
+
+
+
 
     // public void test9(){
     //     MultipartFile upload = new MultipartFile("");
