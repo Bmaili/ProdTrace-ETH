@@ -2,7 +2,7 @@ package com.eth;
 
 import com.eth.controller.DeptController;
 import com.eth.controller.OperatorController;
-import com.eth.form.flow.CreaterFlowForm;
+import com.eth.form.flow.CreateFlowForm;
 import com.eth.pojo.DeptPo;
 import com.eth.pojo.OperatorPo;
 import com.eth.pojo.ProductPo;
@@ -19,20 +19,14 @@ import com.eth.utils.FileSHAUtils;
 import com.eth.vo.DeptInfoVO;
 import com.eth.vo.ResponseResult;
 import lombok.Data;
-import net.coobird.thumbnailator.Thumbnails;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -146,7 +140,7 @@ public class AllTest {
 
     @Test
     public void test11() throws Exception {
-        CreaterFlowForm form = new CreaterFlowForm();
+        CreateFlowForm form = new CreateFlowForm();
         form.setDeptName("娃哈哈生产");
         form.setNum("998");
         form.setCategory("食品");
@@ -156,7 +150,7 @@ public class AllTest {
         form.setQuality("180天");
         form.setOrigin("广西桂林");
         form.setOperatorName("周杰伦");
-        flowService.addCreaterFlow(form);
+        flowService.addCreateFlow(form);
     }
 
 

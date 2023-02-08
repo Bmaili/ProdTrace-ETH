@@ -1,14 +1,17 @@
 package com.eth.service;
 
-import com.eth.form.flow.CreaterFlowForm;
-import com.eth.pojo.BlockchainTransaction;
+import com.eth.form.flow.CreateFlowForm;
+import com.eth.form.flow.ProcessFlowForm;
+import com.eth.form.flow.SaleFlowForm;
+import com.eth.form.flow.TransportFlowForm;
 import com.eth.vo.ResponseResult;
 
-import java.io.IOException;
-
 public interface FlowService {
-      ResponseResult addCreaterFlow(CreaterFlowForm form);
+      ResponseResult addCreateFlow(CreateFlowForm form);
 
+      ResponseResult addProcessFlow(ProcessFlowForm form);
 
+      ResponseResult addTransportFlow(TransportFlowForm form);
 
+      ResponseResult addSaleFlow(SaleFlowForm form);
 }

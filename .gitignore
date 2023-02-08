@@ -2,3 +2,5 @@ logs
 *.log
 .idea
 target
+/src/main/resources/application.yaml
+/src/main/test/

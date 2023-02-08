@@ -24,8 +24,11 @@
                b.head_block,
                b.status,
                b.create_time
-        from batch_info as b ,dept_info as d ,prod_info as p
-        where b.dept_id = d.dept_id and b.prod_id = p.prod_id
+        from batch_info as b,
+             dept_info as d,
+             prod_info as p
+        where b.dept_id = d.dept_id
+          and b.prod_id = p.prod_id
     </sql>
 
     <select id="selectById" parameterType="String" resultMap="BatchResult">
@@ -37,9 +40,12 @@
                b.head_block,
                b.status,
                b.create_time
-        from batch_info as b ,dept_info as d ,prod_info as p
-        where b.dept_id = d.dept_id and b.prod_id = p.prod_id
-        and b.batch_id = #{batchId}
+        from batch_info as b,
+             dept_info as d,
+             prod_info as p
+        where b.dept_id = d.dept_id
+          and b.prod_id = p.prod_id
+          and b.batch_id = #{batchId}
     </select>
 
     <select id="selectBatchList" parameterType="com.eth.form.BatchListForm" resultMap="BatchResult">
@@ -63,12 +69,13 @@
         <if test='endTime != null and endTime != ""'><!-- 结束时间检索 -->
             AND date_format(b.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
         </if>
+        order by b.create_time desc
     </select>
 
     <update id="updateById" parameterType="com.eth.pojo.BatchPo">
         update batch_info
         <set>
-            <if test='status != null and status != ""'>'status' = #{status},</if>
+            <if test='status != null and status != ""'>`status` = #{status},</if>
         </set>
         WHERE batch_id = #{batchId}
     </update>
@@ -77,7 +84,7 @@
         insert into batch_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="batchId != null">batch_id,</if>
-            <if test="prodId != null">prod_name,</if>
+            <if test="prodId != null">prod_id,</if>
             <if test="deptId!= null">dept_id,</if>
             <if test="status != null">`status`,</if>
             <if test="headBlock != null">head_block,</if>

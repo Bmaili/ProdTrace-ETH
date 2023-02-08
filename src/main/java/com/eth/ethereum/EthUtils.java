@@ -45,13 +45,14 @@ public class EthUtils implements InitializingBean {
     }
 
 
-    public  boolean uploadToBlock(String traceId, Object data) {
-        try {
+    public  boolean uploadToBlock(String traceId, Object data)  {
+
             String jsonStr = JSONObject.toJSONString(data);
+        try {
             TransactionReceipt send = productFlowTrace.addTrace(traceId, jsonStr).send();
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return false;
+            log.error(e.getMessage(),e);
+            throw new RuntimeException(e);
         }
         return true;
     }
