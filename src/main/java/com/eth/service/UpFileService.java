@@ -4,5 +4,7 @@ import com.eth.vo.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UpFileService {
-    ResponseResult upPicture (MultipartFile file);
+    ResponseResult upDeptPicture(MultipartFile file);
+
+    ResponseResult upFlowFile(MultipartFile file);
 }

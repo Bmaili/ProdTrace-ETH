@@ -81,6 +81,6 @@ public class DeptController {
     @ApiOperation("上传企业资料图片")
     @PostMapping(value = "/upPic")
     public ResponseResult uploadFile(@RequestParam(value = "file", required = true) MultipartFile upload) {
-        return upFileService.upPicture(upload);
+        return upFileService.upDeptPicture(upload);
     }
 }

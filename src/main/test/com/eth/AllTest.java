@@ -146,7 +146,6 @@ public class AllTest {
         form.setCategory("食品");
         form.setProdId("998");
         form.setPhone("187783443432");
-        form.setFileUrlList("http://skvkeevwev-sve.png,http://sdlvjleih-se21e4.jpg");
         form.setQuality("180天");
         form.setOrigin("广西桂林");
         form.setOperatorName("周杰伦");

@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 public class TransportFlowForm {
@@ -25,11 +27,11 @@ public class TransportFlowForm {
     @ApiModelProperty("联系电话")
     private String phone;
 
-    @ApiModelProperty("文件链接列表")
-    private String fileUrlList;
+    @ApiModelProperty("备注")
+    private String notes;
 
     @ApiModelProperty("文件摘要列表")
-    private String fileSHA256List;
+    private List<FileSHAForm> fileList;
 
     @ApiModelProperty("始发地")
     private String origin;

@@ -15,6 +15,7 @@ import org.web3j.protocol.http.HttpService;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -57,15 +58,14 @@ public class EthUtils implements InitializingBean {
         return true;
     }
 
-    public   String downloadFromBlock(String traceId) {
-        List jsonList = null;
+    public List downloadFromBlock(String traceId) {
+        List jsonList = new ArrayList();
         try {
-            jsonList = productFlowTrace.getTraceInfo("2233").send();
+            jsonList = productFlowTrace.getTraceInfo(traceId).send();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return "";
         }
-        return jsonList.toString();
+        return jsonList;
     }
 
 

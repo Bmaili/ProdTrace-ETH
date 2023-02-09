@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 public class SaleFlowForm {
@@ -28,9 +30,12 @@ public class SaleFlowForm {
     @ApiModelProperty("报价")
     private String price;
 
-    @ApiModelProperty("文件链接列表")
-    private String fileUrlList;
+    @ApiModelProperty("销售地址")
+    private String address;
+
+    @ApiModelProperty("备注")
+    private String notes;
 
     @ApiModelProperty("文件摘要列表")
-    private String fileSHA256List;
+    private List<FileSHAForm> fileList;
 }

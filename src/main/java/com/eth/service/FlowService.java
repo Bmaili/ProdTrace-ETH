@@ -5,6 +5,9 @@ import com.eth.form.flow.ProcessFlowForm;
 import com.eth.form.flow.SaleFlowForm;
 import com.eth.form.flow.TransportFlowForm;
 import com.eth.vo.ResponseResult;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface FlowService {
       ResponseResult addCreateFlow(CreateFlowForm form);
@@ -14,4 +17,6 @@ public interface FlowService {
       ResponseResult addTransportFlow(TransportFlowForm form);
 
       ResponseResult addSaleFlow(SaleFlowForm form);
+
+      List getFlowByTraceId(String traceId);
 }
