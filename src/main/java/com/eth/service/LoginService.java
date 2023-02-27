@@ -10,6 +10,8 @@ public interface LoginService {
     ResponseResult getUserInfo();
 
     ResponseResult logout();
+
+    ResponseResult feedback();
     //
     // ResponseResult regist(LoginForm user);
     //

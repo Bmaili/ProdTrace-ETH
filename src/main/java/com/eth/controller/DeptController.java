@@ -5,8 +5,8 @@ import com.eth.pojo.DeptPo;
 import com.eth.form.DeptListForm;
 import com.eth.service.DeptService;
 import com.eth.service.UpFileService;
-import com.eth.vo.DeptInfoVO;
-import com.eth.vo.DeptListItemVO;
+import com.eth.vo.DeptInfoVo;
+import com.eth.vo.DeptListItemVo;
 import com.eth.vo.ResponseResult;
 import com.eth.vo.TableDataInfo;
 import com.github.pagehelper.PageHelper;
@@ -49,14 +49,14 @@ public class DeptController {
     @ApiOperation("查询企业选项列表")
     @GetMapping(value = "/options")
     public ResponseResult getOptionsList(@Valid DeptForm form) {
-        List<DeptListItemVO> itemVOS = deptService.selectDeptOptionsList(form);
+        List<DeptListItemVo> itemVOS = deptService.selectDeptOptionsList(form);
         return new ResponseResult(itemVOS);
     }
 
     @ApiOperation("通过ID查询企业信息")
     @GetMapping(name = "查询企业")
     public ResponseResult getDept(@Valid String deptId) {
-        DeptInfoVO info = deptService.getDeptById(deptId);
+        DeptInfoVo info = deptService.getDeptById(deptId);
         return new ResponseResult(info);
     }
 
@@ -81,6 +81,6 @@ public class DeptController {
     @ApiOperation("上传企业资料图片")
     @PostMapping(value = "/upPic")
     public ResponseResult uploadFile(@RequestParam(value = "file", required = true) MultipartFile upload) {
-        return upFileService.upDeptPicture(upload);
+        return upFileService.upPicture(upload);
     }
 }

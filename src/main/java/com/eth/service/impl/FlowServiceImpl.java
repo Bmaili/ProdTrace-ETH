@@ -33,7 +33,7 @@ public class FlowServiceImpl implements FlowService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult addCreateFlow(CreateFlowForm form) {
-        String traceId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10);
+        String traceId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 16);
         BatchPo batchPo = new BatchPo();
         BeanUtils.copyProperties(form, batchPo);
         batchPo.setBatchId(traceId);

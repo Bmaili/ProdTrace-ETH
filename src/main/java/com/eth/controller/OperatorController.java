@@ -4,7 +4,7 @@ import com.eth.pojo.OperatorPo;
 import com.eth.form.OperatorForm;
 import com.eth.form.OperatorListForm;
 import com.eth.service.OperatorService;
-import com.eth.vo.OperatorInfoVO;
+import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
 import com.eth.vo.TableDataInfo;
 import com.github.pagehelper.PageHelper;
@@ -36,7 +36,7 @@ public class OperatorController {
     @ApiOperation("通过ID查询操作员信息")
     @GetMapping(name = "查询操作员")
     public ResponseResult getOperator(@Valid String operatorId) {
-        OperatorInfoVO operator = operatorService.getOperatorById(operatorId);
+        OperatorInfoVo operator = operatorService.getOperatorById(operatorId);
         return new ResponseResult(operator);
     }
 

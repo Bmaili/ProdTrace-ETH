@@ -12,28 +12,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DeptInfoVO {
-    private String deptId;// 企业ID
+public class FeedbackInfoVo {
+    private Long feedbackId;
 
-    private String deptName;// 操作员姓名
-
-    private String role;//企业角色ID
-
-    private String shortName;
+    private String name;
 
     private String address;
 
-    private String linkman;
+    private String phone;
 
-    private String linkphone;
+    private String email;
 
-    private String license;
+    private String title;
 
-    private String notes;
+    private String info;
+
+    private String eval;
 
     private String picture;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 }
-

@@ -32,16 +32,4 @@ public class LoginController {
     public ResponseResult userLogout() {
         return loginService.logout();
     }
-    //
-    // @ApiOperation("用户注册")
-    // @PostMapping("/regist")
-    // public ResponseResult userRegist(@RequestBody LoginForm user) {
-    //     return loginService.userRegist(user);
-    // }
-    //
-    // @ApiOperation("获得用户注册账号验证码")
-    // @GetMapping("/getRegistCode")
-    // public ResponseResult getRegistCode(@RequestParam(value = "email") String email) {
-    //     return loginService.getRegistCode(email);
-    // }
 }

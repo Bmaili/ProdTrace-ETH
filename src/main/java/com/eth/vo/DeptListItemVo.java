@@ -3,7 +3,7 @@ package com.eth.vo;
 import lombok.Data;
 
 @Data
-public class DeptListItemVO {
+public class DeptListItemVo {
     private String dictLabel;
     private String dictValue;
 }

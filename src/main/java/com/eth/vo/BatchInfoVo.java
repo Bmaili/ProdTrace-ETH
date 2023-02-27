@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class BatchInfoVO {
+public class BatchInfoVo {
     private String batchId;
 
     private String deptId;

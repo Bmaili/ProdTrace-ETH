@@ -16,7 +16,7 @@ import com.eth.service.FlowService;
 import com.eth.service.ProdService;
 import com.eth.utils.AliOss;
 import com.eth.utils.FileSHAUtils;
-import com.eth.vo.DeptInfoVO;
+import com.eth.vo.DeptInfoVo;
 import com.eth.vo.ResponseResult;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
@@ -82,7 +82,7 @@ public class AllTest {
 
     @Test
     public void test3(){
-        DeptInfoVO info = deptService.getDeptById("0");
+        DeptInfoVo info = deptService.getDeptById("0");
         System.out.println(info);
     }
 

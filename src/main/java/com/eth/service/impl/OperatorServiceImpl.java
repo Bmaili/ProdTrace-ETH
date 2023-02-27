@@ -6,7 +6,7 @@ import com.eth.form.OperatorForm;
 import com.eth.form.OperatorListForm;
 import com.eth.mapper.OperatorMapper;
 import com.eth.service.OperatorService;
-import com.eth.vo.OperatorInfoVO;
+import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -26,9 +25,9 @@ public class OperatorServiceImpl implements OperatorService {
     OperatorMapper operatorMapper;
 
     @Override
-    public OperatorInfoVO getOperatorById(String id) {
+    public OperatorInfoVo getOperatorById(String id) {
         OperatorPo operatorPo = operatorMapper.selectById(id);
-        OperatorInfoVO infoVO = new OperatorInfoVO();
+        OperatorInfoVo infoVO = new OperatorInfoVo();
         BeanUtils.copyProperties(operatorPo, infoVO);
         return infoVO;
     }

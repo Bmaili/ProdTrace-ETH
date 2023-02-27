@@ -6,8 +6,8 @@ import com.eth.pojo.DeptPo;
 import com.eth.form.DeptListForm;
 import com.eth.mapper.DeptMapper;
 import com.eth.service.DeptService;
-import com.eth.vo.DeptInfoVO;
-import com.eth.vo.DeptListItemVO;
+import com.eth.vo.DeptInfoVo;
+import com.eth.vo.DeptListItemVo;
 import com.eth.vo.ResponseResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,20 +78,20 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public DeptInfoVO getDeptById(String id) {
+    public DeptInfoVo getDeptById(String id) {
         DeptPo deptPo = deptMapper.selectById(id);
-        DeptInfoVO infoVO = new DeptInfoVO();
+        DeptInfoVo infoVO = new DeptInfoVo();
         BeanUtils.copyProperties(deptPo, infoVO);
         return infoVO;
     }
 
     @Override
-    public List<DeptListItemVO> selectDeptOptionsList(DeptForm form) {
+    public List<DeptListItemVo> selectDeptOptionsList(DeptForm form) {
         DeptListForm listForm = new DeptListForm();
         BeanUtils.copyProperties(form,listForm);
         List<DeptPo> deptPos = deptMapper.selectDeptList(listForm);
-        List<DeptListItemVO> voList = deptPos.stream().map(dept -> {
-            DeptListItemVO itemVO = new DeptListItemVO();
+        List<DeptListItemVo> voList = deptPos.stream().map(dept -> {
+            DeptListItemVo itemVO = new DeptListItemVo();
             itemVO.setDictLabel(dept.getDeptName());
             itemVO.setDictValue(dept.getDeptId());
             return itemVO;

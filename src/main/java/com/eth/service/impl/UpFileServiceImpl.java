@@ -23,7 +23,7 @@ public class UpFileServiceImpl implements UpFileService {
     AliOss aliOss;
 
     @Override
-    public ResponseResult upDeptPicture(MultipartFile upload) {
+    public ResponseResult upPicture(MultipartFile upload) {
         String fileName = upload.getOriginalFilename();
         InputStream stream = null;
         try {

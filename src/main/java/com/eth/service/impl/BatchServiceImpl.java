@@ -6,7 +6,7 @@ import com.eth.form.BatchListForm;
 import com.eth.mapper.BatchMapper;
 import com.eth.pojo.BatchPo;
 import com.eth.service.BatchService;
-import com.eth.vo.BatchInfoVO;
+import com.eth.vo.BatchInfoVo;
 import com.eth.vo.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -29,9 +29,9 @@ public class BatchServiceImpl implements BatchService {
     }
 
     @Override
-    public BatchInfoVO getBatchById(String id) {
+    public BatchInfoVo getBatchById(String id) {
         BatchPo batchPo = batchMapper.selectById(id);
-        BatchInfoVO infoVO = new BatchInfoVO();
+        BatchInfoVo infoVO = new BatchInfoVo();
         BeanUtils.copyProperties(batchPo, infoVO);
         return infoVO;
     }

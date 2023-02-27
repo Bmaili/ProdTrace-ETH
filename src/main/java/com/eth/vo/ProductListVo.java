@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProductListVO implements Serializable {
+public class ProductListVo implements Serializable {
     private String prodId;// 产品编号
 
     private String prodName;// 产品全称

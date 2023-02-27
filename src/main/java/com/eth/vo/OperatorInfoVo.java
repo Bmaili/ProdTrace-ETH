@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class OperatorInfoVO {
+public class OperatorInfoVo {
     private String operatorId;// 账号ID
 
     private String operatorName;// 操作员姓名

@@ -10,7 +10,7 @@ import com.eth.security.JwtUserDetailServiceImpl;
 import com.eth.service.LoginService;
 import com.eth.utils.JwtUtils;
 import com.eth.utils.RedisCache;
-import com.eth.vo.OperatorInfoVO;
+import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +91,7 @@ public class LoginServiceImpl implements LoginService {
     public ResponseResult getUserInfo() {
         String userId = (String) httpServletRequest.getAttribute("userId");
         OperatorPo operatorPo = operatorMapper.selectById(userId);
-        OperatorInfoVO operatorInfoVO = new OperatorInfoVO();
+        OperatorInfoVo operatorInfoVO = new OperatorInfoVo();
         BeanUtils.copyProperties(operatorPo, operatorInfoVO);
         return new ResponseResult(HttpStatus.OK.value(), operatorInfoVO);
     }
@@ -158,30 +158,8 @@ public class LoginServiceImpl implements LoginService {
         return new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "登出失败！", "false");
     }
 
-    // @Override
-    // public ResponseResult getRegistCode(String email) {
-    //     // 用户名格式检查
-    //     String match = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-    //     if (StringUtil.isNullOrEmpty(email) || email.length() > 40 || !(email.matches(match))) {
-    //         return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "用户名不符合规范！");
-    //     }
-    //     // 用户名是否已经注册
-    //     if (LoginMapper.getLoginUser(email) != null) {
-    //         return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "该用户名已注册！");
-    //     }
-    //
-    //     // 生成随机数验证码
-    //     Random random = new Random();
-    //     String result = "";
-    //     for (int i = 0; i < 6; i++) {
-    //         result += random.nextInt(10);
-    //     }
-    //
-    //     // redis 保存用户验证用户名验证码 180秒过期
-    //     redisCache.setCacheObject("regist:" + email, result, 180, TimeUnit.SECONDS);
-    //
-    //     // 发送邮件
-    //     EmailUtils.sendEmail(email, result);
-    //     return new ResponseResult(200, "发送成功，请查看用户名验证码");
-    // }
+    @Override
+    public ResponseResult feedback() {
+        return null;
+    }
 }

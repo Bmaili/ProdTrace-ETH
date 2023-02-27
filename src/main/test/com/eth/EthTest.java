@@ -2,7 +2,6 @@ package com.eth;
 
 import ch.qos.logback.core.joran.spi.SimpleRuleStore;
 import com.alibaba.fastjson.JSONObject;
-import com.eth.pojo.BlockchainTransaction;
 import com.eth.pojo.DeptPo;
 import com.eth.service.FlowService;
 import com.eth.solidity.ProductFlowTrace;

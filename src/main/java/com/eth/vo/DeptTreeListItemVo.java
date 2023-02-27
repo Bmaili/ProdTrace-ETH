@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class DeptTreeListItemVO {
+public class DeptTreeListItemVo {
     private String role;
     private String roleName;
-    private List<DeptTreeListItemVO> children;
+    private List<DeptTreeListItemVo> children;
 }

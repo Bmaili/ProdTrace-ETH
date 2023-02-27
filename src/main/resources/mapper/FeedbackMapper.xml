@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.mapper.FeedbackMapper">
+
+    <resultMap type="com.eth.pojo.FeedbackPo" id="FeedbackResult">
+        <id property="feedbackId" column="feedback_id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="address" column="address"/>
+        <result property="title" column="title"/>
+        <result property="info" column="info"/>
+        <result property="eval" column="eval"/>
+        <result property="picture" column="picture"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectFeedback">
+        select feedback_id,
+               `name`,
+               phone,
+               address,
+               email,
+               title,
+               info,
+               eval,
+               picture,
+               create_time
+        from feedback_info
+    </sql>
+
+    <select id="selectById" parameterType="Long" resultMap="FeedbackResult">
+        <include refid="selectFeedback"/>
+        where feedback_id = #{feedbackId}
+    </select>
+
+    <select id="selectFeedbackList" parameterType="com.eth.form.FeedbackListForm" resultMap="FeedbackResult">
+        <include refid="selectFeedback"/>
+        <if test='feedbackId != null and feedbackId != 0L'>and feedback_id = #{feedbackId}</if>
+        <if test='title != null and title != ""'>and name like concat('%', #{title},'%')
+        </if>
+        <if test='eval != null and eval != ""'>and eval = #{eval}</if>
+        <if test='beginTime != null and beginTime != ""'><!-- 开始时间检索 -->
+            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test='endTime != null and endTime != ""'><!-- 结束时间检索 -->
+            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <delete id="delById" parameterType="Long">
+        DELETE
+        FROM feedback_info
+        WHERE feedback_id = #{feedbackId}
+    </delete>
+
+    <insert id="insertFeedback" parameterType="com.eth.pojo.FeedbackPo">
+        insert into feedback_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">`name`,</if>
+            <if test="email!= null">email,</if>
+            <if test="address != null">address,</if>
+            <if test="phone != null">phone,</if>
+            <if test="title != null">title,</if>
+            <if test="info != null">info,</if>
+            <if test="eval != null">eval,</if>
+            <if test="picture != null">picture,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="email!= null">#{email},</if>
+            <if test="address != null">#{address},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="title != null">#{title},</if>
+            <if test="info != null">#{info},</if>
+            <if test="eval != null">#{eval},</if>
+            <if test="picture != null">#{picture},</if>
+        </trim>
+    </insert>
+</mapper>
