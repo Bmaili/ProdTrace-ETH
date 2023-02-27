@@ -13,13 +13,13 @@ public class BatchListForm {
     @ApiModelProperty("每页数量")
     private Integer pageSize = 10;
 
-    @ApiModelProperty("批次编号")
+    @ApiModelProperty("批次Id")
     private String batchId;
 
-    @ApiModelProperty("企业ID")
+    @ApiModelProperty("企业Id")
     private String deptId;
 
-    @ApiModelProperty("产品编号")
+    @ApiModelProperty("产品Id")
     private String prodId;
 
     @ApiModelProperty("流程状态")

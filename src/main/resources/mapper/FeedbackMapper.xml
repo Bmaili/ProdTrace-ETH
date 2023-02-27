@@ -38,9 +38,8 @@
 
     <select id="selectFeedbackList" parameterType="com.eth.form.FeedbackListForm" resultMap="FeedbackResult">
         <include refid="selectFeedback"/>
+        where true
         <if test='feedbackId != null and feedbackId != 0L'>and feedback_id = #{feedbackId}</if>
-        <if test='title != null and title != ""'>and name like concat('%', #{title},'%')
-        </if>
         <if test='eval != null and eval != ""'>and eval = #{eval}</if>
         <if test='beginTime != null and beginTime != ""'><!-- 开始时间检索 -->
             AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
