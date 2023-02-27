@@ -7,13 +7,10 @@ import com.eth.vo.ResponseResult;
 public interface LoginService {
 
     ResponseResult login(LoginForm user);
+
     ResponseResult getUserInfo();
 
     ResponseResult logout();
 
-    ResponseResult feedback();
-    //
-    // ResponseResult regist(LoginForm user);
-    //
-    // ResponseResult getLoginCode(String email);
+    ResponseResult updatePassword(String oldPassword,String newPassword);
 }

@@ -1,5 +1,6 @@
 package com.eth.service.impl;
 
+import com.eth.enums.ResultEnum;
 import com.eth.pojo.LoginUserPo;
 import com.eth.pojo.OperatorPo;
 import com.eth.form.LoginForm;
@@ -12,6 +13,7 @@ import com.eth.utils.JwtUtils;
 import com.eth.utils.RedisCache;
 import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
+import io.netty.util.internal.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -96,55 +98,6 @@ public class LoginServiceImpl implements LoginService {
         return new ResponseResult(HttpStatus.OK.value(), operatorInfoVO);
     }
 
-
-    // @Transactional
-    // @Override
-    // public ResponseResult userRegist(LoginForm registUser) {
-    //
-    //     // 查看前端传输过来的密码是否符合要求
-    //     // 由数字和字母组成，长度在6-15位
-    //     String password = registUser.getPassword();
-    //     if (StringUtil.isNullOrEmpty(password) || !(password.matches("^[0-9a-zA-Z]{6,15}$"))) {
-    //         return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "注册失败,密码不符合规范！");
-    //     }
-    //
-    //     // 用户名格式检查
-    //     String email = registUser.getUsername();
-    //     String match = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-    //     if (StringUtil.isNullOrEmpty(email) || email.length() > 40 || !(email.matches(match))) {
-    //         return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "注册失败,用户名不符合规范！");
-    //     }
-    //     // 用户名是否已经注册
-    //     if (LoginMapper.getLoginUser(email) != null) {
-    //         return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "注册失败,该用户名已注册！");
-    //     }
-    //
-    //     // 验证码检查
-    //     String redisKey = "regist:" + email;
-    //     String code = (String) redisCache.getCacheObject(redisKey);
-    //     if (StringUtil.isNullOrEmpty(registUser.getCode()) || (!registUser.getCode().equals(code))) {
-    //         return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "验证码不正确！");
-    //     }
-    //
-    //     // 密码加密后再存储数据库
-    //     String BCPassword = new BCryptPasswordEncoder().encode(registUser.getPassword());
-    //
-    //     // 将新用户分别插入两个数据表，这里得加事务了
-    //     User newUser = new User();
-    //     try {
-    //         if (LoginMapper.addUser(newUser) != 0) {
-    //             if (LoginMapper.addLoginUser(newUser.getOperatorId(),   BCPassword) != 0) {
-    //                 return new ResponseResult(HttpStatus.OK.value(), "注册成功");
-    //             }
-    //         }
-    //     } catch (RuntimeException e) {
-    //         // 抛出异常回滚事务
-    //         throw new MySQLException(e.toString(), new ResponseResult(ResultEnum.DB_ERROR));
-    //     }
-    //     return new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "注册失败,新用户未插入数据表！");
-    // }
-
-
     @Override
     public ResponseResult logout() {
 
@@ -159,7 +112,21 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseResult feedback() {
-        return null;
+    public ResponseResult updatePassword(String oldPassword,String newPassword) {
+        // 查看前端传输过来的密码是否符合要求
+        // 由数字或字母组成，长度在6-15位
+        if (StringUtil.isNullOrEmpty(newPassword) || !(newPassword.matches("^[0-9a-zA-Z]{6,15}$"))) {
+            return new ResponseResult(ResultEnum.PASS_WRONGFUL);
+        }
+
+        String userId = (String) httpServletRequest.getAttribute("userId");
+        LoginUserPo user = loginMapper.getLoginUser(userId);
+        if (!new BCryptPasswordEncoder().matches(oldPassword, user.getPassword())) {
+            return new ResponseResult(ResultEnum.PASS_DIFF_ERROR);
+        }
+
+        String encode = new BCryptPasswordEncoder().encode(newPassword);
+        loginMapper.updateLoginUserPassword(userId, encode);
+        return new ResponseResult(ResultEnum.SUCCESS_OF_UPDATE);
     }
 }

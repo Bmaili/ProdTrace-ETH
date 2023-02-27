@@ -76,7 +76,7 @@
             <if test='linkphone != null and linkphone != "" '>linkphone = #{linkphone},</if>
             <if test='license != null and license != "" '>license = #{license},</if>
             <if test='notes != null '>notes = #{notes},</if>
-            <if test='picture != null'>picture = #{picture},</if>
+            <if test='picture != null and picture!="" '>picture = #{picture},</if>
         </set>
         WHERE dept_id = #{deptId}
     </update>

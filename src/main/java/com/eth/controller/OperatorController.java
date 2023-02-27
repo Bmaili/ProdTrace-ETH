@@ -4,16 +4,21 @@ import com.eth.pojo.OperatorPo;
 import com.eth.form.OperatorForm;
 import com.eth.form.OperatorListForm;
 import com.eth.service.OperatorService;
+import com.eth.service.UpFileService;
 import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
 import com.eth.vo.TableDataInfo;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -62,5 +67,16 @@ public class OperatorController {
     @PutMapping(name = "更新操作员状态", value = "/changeStatus")
     public ResponseResult changeOperatorStatus(@RequestBody @Valid OperatorForm form) {
         return operatorService.updateOperator(form);
+    }
+
+    @ApiOperation("上传头像")
+    @PostMapping(name = "上传头像", value = "/avatar")
+    public ResponseResult uploadAvatar(@RequestParam(value = "file", required = true) MultipartFile upload) throws IOException {
+        System.out.println(upload.getSize());
+        String filePath = "\\临时头像文件.jpg";
+        File targetFile = new File(filePath);
+        upload.transferTo(targetFile);
+
+        return operatorService.uploadAvatar(targetFile);
     }
 }

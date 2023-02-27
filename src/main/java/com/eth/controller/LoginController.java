@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @Api(tags = "用户登陆登出注销接口")
 public class LoginController {
@@ -31,5 +33,11 @@ public class LoginController {
     @PostMapping("/user/logout")
     public ResponseResult userLogout() {
         return loginService.logout();
+    }
+
+    @ApiOperation("修改用户密码")
+    @PutMapping("/user/updatePass")
+    public ResponseResult updatePassword(@Valid String oldPassword, @Valid String newPassword) {
+        return loginService.updatePassword(oldPassword, newPassword);
     }
 }

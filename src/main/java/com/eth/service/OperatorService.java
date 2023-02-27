@@ -5,7 +5,9 @@ import com.eth.form.OperatorForm;
 import com.eth.form.OperatorListForm;
 import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 public interface OperatorService  {
@@ -18,4 +20,6 @@ public interface OperatorService  {
     ResponseResult updateOperator(OperatorForm form );
 
     ResponseResult insertOperator(OperatorForm form);
+
+    ResponseResult uploadAvatar(File upload);
 }

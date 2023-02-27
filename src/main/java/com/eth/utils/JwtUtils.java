@@ -99,8 +99,6 @@ public class JwtUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        // String jwt = JwtUtils.createJWT("10003");
-        // System.out.println(jwt);
         String BCPassword = new BCryptPasswordEncoder().encode("123456");
         System.out.println(BCPassword);
     }

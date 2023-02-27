@@ -1,5 +1,6 @@
 package com.eth.controller;
 
+import com.eth.enums.ResultEnum;
 import com.eth.form.FeedbackForm;
 import com.eth.form.FeedbackListForm;
 import com.eth.pojo.FeedbackPo;
@@ -11,16 +12,19 @@ import com.eth.vo.TableDataInfo;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/feedback")
 @Api(tags = "用户反馈操作接口")
+@Slf4j
 public class FeedbackController {
 
     @Autowired
@@ -60,6 +64,13 @@ public class FeedbackController {
     @ApiOperation("上传用户反馈资料图片")
     @PostMapping(value = "/upPic")
     public ResponseResult uploadFile(@RequestParam(value = "file", required = true) MultipartFile upload) {
-        return upFileService.upPicture(upload);
+        Map map = null;
+        try {
+            map = upFileService.upPicture(upload);
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            return new ResponseResult(ResultEnum.RUNTIME_ERROR);
+        }
+        return new ResponseResult(ResultEnum.SUCCESS_OF_ADD,map);
     }
 }

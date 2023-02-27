@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -23,19 +24,24 @@ public class UpFileServiceImpl implements UpFileService {
     AliOss aliOss;
 
     @Override
-    public ResponseResult upPicture(MultipartFile upload) {
+    public Map upPicture(MultipartFile upload) throws IOException {
         String fileName = upload.getOriginalFilename();
         InputStream stream = null;
-        try {
-            stream = upload.getInputStream();
-        } catch (IOException e) {
-            return new ResponseResult(ResultEnum.RUNTIME_ERROR);
-        }
+        stream = upload.getInputStream();
         // 调用OSS服务上传图片
         String path = aliOss.ossUpInputStream(stream, fileName);
-        HashMap<Object, Object> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("picPath", path);
-        return new ResponseResult(ResultEnum.SUCCESS_GET, map);
+        return map;
+    }
+
+    @Override
+    public Map<String, String> upPicture(File file) throws IOException {
+        // 调用OSS服务上传图片
+        String path = aliOss.ossUpFile(file);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("picPath", path);
+        return map;
     }
 
     @Override

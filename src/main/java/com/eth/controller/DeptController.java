@@ -1,5 +1,6 @@
 package com.eth.controller;
 
+import com.eth.enums.ResultEnum;
 import com.eth.form.DeptForm;
 import com.eth.pojo.DeptPo;
 import com.eth.form.DeptListForm;
@@ -12,18 +13,20 @@ import com.eth.vo.TableDataInfo;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/dept")
 @Api(tags = "企业操作接口")
+@Slf4j
 public class DeptController {
-
 
     @Autowired
     private DeptService deptService;
@@ -81,6 +84,13 @@ public class DeptController {
     @ApiOperation("上传企业资料图片")
     @PostMapping(value = "/upPic")
     public ResponseResult uploadFile(@RequestParam(value = "file", required = true) MultipartFile upload) {
-        return upFileService.upPicture(upload);
+        Map map = null;
+        try {
+             map = upFileService.upPicture(upload);
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            return new ResponseResult(ResultEnum.RUNTIME_ERROR);
+        }
+        return new ResponseResult(ResultEnum.SUCCESS_OF_ADD,map);
     }
 }

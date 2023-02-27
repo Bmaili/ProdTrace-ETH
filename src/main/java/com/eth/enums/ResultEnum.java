@@ -13,6 +13,8 @@ public enum ResultEnum {
     SUCCESS_OF_ADD(HttpStatus.OK.value(), "添加成功！"),
     USER_NOT_EXIST(3, "该用户不存在！"),
     File_NOT_EXIST(4, "查找的资源不存在！"),
+    PASS_DIFF_ERROR(4000, "原密码不匹配！"),
+    PASS_WRONGFUL(4001, "密码不合法！"),
     SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器发生异常！"),
     DB_ERROR(5, "数据库操作异常"),
     RUNTIME_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "运行时异常! "),
