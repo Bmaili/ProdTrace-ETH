@@ -4,9 +4,6 @@ import com.eth.pojo.OperatorPo;
 import com.eth.form.OperatorForm;
 import com.eth.form.OperatorListForm;
 import com.eth.service.OperatorService;
-import com.eth.service.UpFileService;
-import com.eth.utils.AliOss;
-import com.eth.utils.FileUtils;
 import com.eth.vo.OperatorInfoVo;
 import com.eth.vo.ResponseResult;
 import com.eth.vo.TableDataInfo;
@@ -18,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 
@@ -31,9 +26,6 @@ public class OperatorController {
 
     @Autowired
     private OperatorService operatorService;
-
-    @Autowired
-    private AliOss aliOss;
 
     @ApiOperation("查询操作员列表")
     @GetMapping(name = "查询操作员列表", value = "/list")

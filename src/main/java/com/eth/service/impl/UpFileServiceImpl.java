@@ -2,8 +2,8 @@ package com.eth.service.impl;
 
 import com.eth.enums.ResultEnum;
 import com.eth.service.UpFileService;
-import com.eth.utils.AliOss;
 import com.eth.utils.FileUtils;
+import com.eth.utils.HuaWeiYunObs;
 import com.eth.vo.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class UpFileServiceImpl implements UpFileService {
 
     @Autowired
-    AliOss aliOss;
+    private HuaWeiYunObs huaWeiYunObs;
 
     @Override
     public Map upPicture(MultipartFile upload) throws IOException {
@@ -30,7 +30,7 @@ public class UpFileServiceImpl implements UpFileService {
         InputStream stream = null;
         stream = upload.getInputStream();
         // 调用OSS服务上传图片
-        String path = aliOss.ossUpInputStream(stream, fileName);
+        String path = huaWeiYunObs.obsUpInputStream(stream, fileName);
         HashMap<String, String> map = new HashMap<>();
         map.put("picPath", path);
         return map;
@@ -39,7 +39,7 @@ public class UpFileServiceImpl implements UpFileService {
     @Override
     public Map<String, String> upPicture(File file) throws IOException {
         // 调用OSS服务上传图片
-        String path = aliOss.ossUpFile(file);
+        String path = huaWeiYunObs.obsUpFile(file);
         HashMap<String, String> map = new HashMap<>();
         map.put("picPath", path);
         return map;
@@ -52,6 +52,7 @@ public class UpFileServiceImpl implements UpFileService {
         try {
             stream = upload.getInputStream();
         } catch (IOException e) {
+            log.error(e.getMessage(), e);
             return new ResponseResult(ResultEnum.RUNTIME_ERROR);
         }
 
@@ -63,12 +64,19 @@ public class UpFileServiceImpl implements UpFileService {
             file = File.createTempFile(fileName, prefix);
             upload.transferTo(file);
         } catch (IOException e) {
+            log.error(e.getMessage(), e);
             return new ResponseResult(ResultEnum.RUNTIME_ERROR);
         }
         String fileSHA256 = FileUtils.getFileSHA256(file);
 
-        // 调用OSS服务上传图片
-        String path = aliOss.ossUpInputStream(stream, fileName);
+        // 调用OBS服务上传图片
+        String path = null;
+        try {
+            path = huaWeiYunObs.obsUpInputStream(stream, fileName);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            return new ResponseResult(ResultEnum.RUNTIME_ERROR);
+        }
         HashMap<Object, Object> map = new HashMap<>();
         map.put("filePath", path);
         map.put("SHA256", fileSHA256);

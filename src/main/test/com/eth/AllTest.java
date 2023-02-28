@@ -14,8 +14,8 @@ import com.eth.mapper.OperatorMapper;
 import com.eth.service.DeptService;
 import com.eth.service.FlowService;
 import com.eth.service.ProdService;
-import com.eth.utils.AliOss;
 import com.eth.utils.FileUtils;
+import com.eth.utils.HuaWeiYunObs;
 import com.eth.vo.DeptInfoVo;
 import com.eth.vo.ResponseResult;
 import lombok.Data;
@@ -53,7 +53,7 @@ public class AllTest {
     private OperatorController operatorController;
 
     @Autowired
-    private AliOss aliOss;
+    private HuaWeiYunObs huaWeiYunObs;
 
     @Test
     public void test() {
@@ -151,36 +151,6 @@ public class AllTest {
         form.setOperatorName("周杰伦");
         flowService.addCreateFlow(form);
     }
-
-
-
-
-    // public void test9(){
-    //     MultipartFile upload = new MultipartFile("");
-    //     String fileName = upload.getOriginalFilename();
-    //     // 获取文件后缀
-    //     String prefix = fileName.substring(fileName.lastIndexOf("."));
-    //     assert fileName != null;
-    //     File file = null;
-    //
-    //     // Thumbnails库进行图片压缩
-    //     // try {
-    //     //     file = File.createTempFile(fileName, prefix);
-    //     //     Thumbnails.of(upload.getInputStream()).scale(0.5f) //图片大小（长宽）压缩比例 从0-1，1表示原图
-    //     //             .outputQuality(0.2f) //图片质量压缩比例 从0-1，越接近1质量越好
-    //     //             .toFile(file);
-    //     //     System.out.println("图片压缩成功");
-    //     // } catch (IOException e) {
-    //     //     e.printStackTrace();
-    //     // }
-    //
-    //     // 调用OSS服务上传图片
-    //     String puth = aliOss.ossUpPic(file);
-    //     HashMap<Object, Object> map = new HashMap<>();
-    //     map.put("picPuth", puth);
-    //     return new ResponseResult(ResultEnum.SUCCESS_GET, map);
-    // }
-
 
 }
 
