@@ -21,5 +21,5 @@ public interface OperatorService  {
 
     ResponseResult insertOperator(OperatorForm form);
 
-    ResponseResult uploadAvatar(File upload);
+    ResponseResult uploadAvatar(MultipartFile upload);
 }

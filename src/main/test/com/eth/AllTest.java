@@ -15,7 +15,7 @@ import com.eth.service.DeptService;
 import com.eth.service.FlowService;
 import com.eth.service.ProdService;
 import com.eth.utils.AliOss;
-import com.eth.utils.FileSHAUtils;
+import com.eth.utils.FileUtils;
 import com.eth.vo.DeptInfoVo;
 import com.eth.vo.ResponseResult;
 import lombok.Data;
@@ -126,7 +126,7 @@ public class AllTest {
         // String md5Hex = DigestUtils.md5Hex(stream);
         // System.out.println(md5Hex);
         // MessageDigest md5 = MessageDigest.getInstance("SHA-256");
-        String hash = FileSHAUtils.getFileSHA256(file);
+        String hash = FileUtils.getFileSHA256(file);
         System.out.println(hash);
     }
 

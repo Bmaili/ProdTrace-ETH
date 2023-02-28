@@ -3,7 +3,7 @@ package com.eth.service.impl;
 import com.eth.enums.ResultEnum;
 import com.eth.service.UpFileService;
 import com.eth.utils.AliOss;
-import com.eth.utils.FileSHAUtils;
+import com.eth.utils.FileUtils;
 import com.eth.vo.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,7 @@ public class UpFileServiceImpl implements UpFileService {
     @Override
     public Map upPicture(MultipartFile upload) throws IOException {
         String fileName = upload.getOriginalFilename();
+
         InputStream stream = null;
         stream = upload.getInputStream();
         // 调用OSS服务上传图片
@@ -64,7 +65,7 @@ public class UpFileServiceImpl implements UpFileService {
         } catch (IOException e) {
             return new ResponseResult(ResultEnum.RUNTIME_ERROR);
         }
-        String fileSHA256 = FileSHAUtils.getFileSHA256(file);
+        String fileSHA256 = FileUtils.getFileSHA256(file);
 
         // 调用OSS服务上传图片
         String path = aliOss.ossUpInputStream(stream, fileName);

@@ -54,6 +54,10 @@ public class AliOss {
     }
 
     public String ossUpInputStream(InputStream inputStream, String fileName) {
+        String[] split = fileName.split("\\.");
+        if (split.length <= 1) {
+            fileName += ".jpg";
+        }
         // 获取文件的后缀名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         // 生成上传文件名

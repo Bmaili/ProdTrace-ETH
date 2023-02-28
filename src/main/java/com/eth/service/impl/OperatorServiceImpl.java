@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public ResponseResult uploadAvatar(File upload) {
+    public ResponseResult uploadAvatar(MultipartFile upload) {
         Map<String,String> map = null;
         try {
             map = upFileService.upPicture(upload);
