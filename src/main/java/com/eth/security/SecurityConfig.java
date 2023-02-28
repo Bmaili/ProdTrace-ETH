@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs", "/api-docs", "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
                 //暂时开放监控页，实际上线需要关闭
                 .antMatchers("/druid/**").permitAll()
-                .antMatchers("*.js","*.gif","*.jpg","*.png","*.css","*.ico","/druid/*","/getTrace","feedback").permitAll()
+                .antMatchers("*.js","*.gif","*.jpg","*.png","*.css","*.ico","/druid/*","/getTrace","/feedback/*","/feedback").permitAll()
                 //除上面外的所有请求全都需要鉴权认证
                 .anyRequest().authenticated();
 

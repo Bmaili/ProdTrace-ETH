@@ -29,7 +29,7 @@ public class UpFileServiceImpl implements UpFileService {
 
         InputStream stream = null;
         stream = upload.getInputStream();
-        // 调用OSS服务上传图片
+        // 调用OBS服务上传图片
         String path = huaWeiYunObs.obsUpInputStream(stream, fileName);
         HashMap<String, String> map = new HashMap<>();
         map.put("picPath", path);
@@ -38,7 +38,7 @@ public class UpFileServiceImpl implements UpFileService {
 
     @Override
     public Map<String, String> upPicture(File file) throws IOException {
-        // 调用OSS服务上传图片
+        // 调用OBS服务上传图片
         String path = huaWeiYunObs.obsUpFile(file);
         HashMap<String, String> map = new HashMap<>();
         map.put("picPath", path);
