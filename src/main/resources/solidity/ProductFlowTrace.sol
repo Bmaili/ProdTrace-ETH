@@ -7,11 +7,19 @@ contract ProductFlowTrace {
     mapping(string=>string[]) traceDatas;
     //溯源码使用标记
     mapping(string=>bool) mark;
+    //合约拥有者
+    address public owner;
     //log
     event NewTrace(address sender, string traceId, string traceJson);
 
+    constructor(){
+        //设置合约拥有者
+        owner = msg.sender;
+    }
+
     //添加溯源信息,参数(溯源码,Json溯源数据)
     function addTrace(string memory traceId, string memory traceJson)public returns(bool){
+        require(msg.sender == owner, "you aren't the owner!");
         traceDatas[traceId].push(traceJson);
         mark[traceId] = true;
         emit NewTrace(msg.sender, traceId, traceJson);

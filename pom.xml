@@ -185,7 +185,7 @@
                 <artifactId>web3j-maven-plugin</artifactId>
                 <version>4.6.5</version>
                 <configuration>
-                    <packageName>com.eth.solidity</packageName>
+                    <packageName>com.eth.ethereum</packageName>
                     <sourceDestination>src/main/java</sourceDestination>
                     <nativeJavaType>true</nativeJavaType>
                     <outputFormat>java</outputFormat>
