@@ -33,8 +33,8 @@ public class ProdController {
     }
     @ApiOperation("通过ID查询产品信息")
     @GetMapping(name = "查询产品")
-    public ResponseResult getProduct(@Valid String productId) {
-        ProductInfoVo product = prodService.getProductById(productId);
+    public ResponseResult getProduct(@Valid String prodId) {
+        ProductInfoVo product = prodService.getProductById(prodId);
         return new ResponseResult(product);
     }
 

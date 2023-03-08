@@ -11,7 +11,7 @@ public interface ProdMapper {
 
     List<ProductPo> selectProdList(ProdListForm form);
 
-    ProductPo selectById(String productId);
+    ProductPo selectById(String prodId);
 
     void updateById(ProductPo product);
 
