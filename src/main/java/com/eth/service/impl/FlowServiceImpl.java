@@ -92,10 +92,11 @@ public class FlowServiceImpl implements FlowService {
 
     private Map<String, Map> blockJsonOfBaseInfo(CreateFlowForm form, String traceId) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        String[] category = new String[]{"其他","农作物","饮食","电子用品","家居"," 服饰","护理","运动","工艺品","医疗"};
         map.put("溯源码", traceId);
         map.put("产品编号", form.getProdId());
         map.put("产品名称", form.getProdName());
-        map.put("产品类别", form.getCategory());
+        map.put("产品类别", category[Integer.parseInt(form.getCategory())]);
 
         HashMap<String, Map> jsonMap = new HashMap<>();
         jsonMap.put("基本信息", map);

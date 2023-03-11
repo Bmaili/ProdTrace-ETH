@@ -63,12 +63,13 @@ public class EthUtils implements InitializingBean {
         ConfigPo config = configMapper.getConfig();
         String configContractAddress = config.getContractAddress();
         if (!StringUtils.hasText(configContractAddress)) {//没有数据，为第一次部署合约
-            log.info("合约部署中...");
+            log.info("未查询到合约地址，新合约部署中...");
             contractAddress = this.deployCont();
             //更新config
             configMapper.updateContractAddress(contractAddress);
-            log.info("合约部署完成！");
+            log.info("合约部署完成！合约地址: \n" + contractAddress);
         } else {
+            log.info("查询到已有合约！合约地址: \n" + configContractAddress);
             contractAddress = configContractAddress;
         }
 
@@ -82,6 +83,7 @@ public class EthUtils implements InitializingBean {
         TransactionReceipt send = null;
         try {
             send = productFlowTrace.addTrace(traceId, jsonStr).send();
+            log.info(send.toString());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
