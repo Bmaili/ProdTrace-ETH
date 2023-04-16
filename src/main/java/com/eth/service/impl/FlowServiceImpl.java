@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -92,7 +93,7 @@ public class FlowServiceImpl implements FlowService {
 
     private Map<String, Map> blockJsonOfBaseInfo(CreateFlowForm form, String traceId) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        String[] category = new String[]{"其他","农作物","饮食","电子用品","家居"," 服饰","护理","运动","工艺品","医疗"};
+        String[] category = new String[]{"其他","农作物","饮食","电子用品","家居","服饰","护理","运动","工艺品","医疗"};
         map.put("溯源码", traceId);
         map.put("产品编号", form.getProdId());
         map.put("产品名称", form.getProdName());
@@ -187,6 +188,9 @@ public class FlowServiceImpl implements FlowService {
 
     @Override
     public List getFlowByTraceId(String traceId) {
+        if(!StringUtils.hasText(traceId)){
+            return null;
+        }
         return ethUtils.downloadFromBlock(traceId);
     }
 }

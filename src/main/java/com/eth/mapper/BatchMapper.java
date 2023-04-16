@@ -15,4 +15,6 @@ public interface BatchMapper {
     void insertBatch(BatchPo batch);
 
     void updateById(BatchPo batch);
+
+    void truncate();
 }

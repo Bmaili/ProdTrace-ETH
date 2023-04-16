@@ -1,6 +1,7 @@
 package com.eth.ethereum;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eth.mapper.BatchMapper;
 import com.eth.mapper.ConfigMapper;
 import com.eth.pojo.ConfigPo;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,9 @@ import java.util.List;
 public class EthUtils implements InitializingBean {
     @Autowired
     private ConfigMapper configMapper;
+
+    @Autowired
+    private BatchMapper batchMapper;
 
     @Value("${ETH.http-service}")
     private String HTTP_SERVICE;
@@ -61,12 +65,22 @@ public class EthUtils implements InitializingBean {
         credentials = WalletUtils.loadCredentials(KEYSTORE_PASSWORD, files[0]);
 
         ConfigPo config = configMapper.getConfig();
-        String configContractAddress = config.getContractAddress();
+        String configContractAddress = null;
+
+        // 配置检查
+        if (config == null) {
+            configMapper.addConfig();
+        }else{
+            configContractAddress = config.getContractAddress();
+        }
+
         if (!StringUtils.hasText(configContractAddress)) {//没有数据，为第一次部署合约
             log.info("未查询到合约地址，新合约部署中...");
             contractAddress = this.deployCont();
             //更新config
             configMapper.updateContractAddress(contractAddress);
+            //清空batch_info表
+            batchMapper.truncate();
             log.info("合约部署完成！合约地址: \n" + contractAddress);
         } else {
             log.info("查询到已有合约！合约地址: \n" + configContractAddress);

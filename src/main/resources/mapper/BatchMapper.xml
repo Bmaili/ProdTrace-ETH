@@ -98,4 +98,8 @@
             <if test="headBlock != null">#{headBlock},</if>
         </trim>
     </insert>
+    
+    <update id="truncate" >
+        TRUNCATE TABLE batch_info
+    </update>
 </mapper>
